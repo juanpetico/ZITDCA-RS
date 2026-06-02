@@ -78,31 +78,31 @@ const camIcon =
               {tieneAntes ? (
                 /* ── Comparador antes/después ── */
                 <div class="comparador absolute inset-0" data-comparador style="--pos:50%;">
-                  <!-- Base: DESPUÉS (lado izquierdo) -->
-                  <img
-                    src={t.despues}
-                    alt={t.despuesAlt ?? `${t.etiqueta} — después`}
-                    loading="lazy"
-                    decoding="async"
-                    class="absolute inset-0 h-full w-full object-cover select-none"
-                    draggable="false"
-                  />
-                  <!-- Overlay: ANTES (lado derecho, recortado por --pos) -->
+                  <!-- Base: ANTES (lado izquierdo) -->
                   <img
                     src={t.antes}
                     alt={t.antesAlt ?? `${t.etiqueta} — antes`}
                     loading="lazy"
                     decoding="async"
-                    class="cmp-antes absolute inset-0 h-full w-full object-cover select-none"
+                    class="absolute inset-0 h-full w-full object-cover select-none"
+                    draggable="false"
+                  />
+                  <!-- Overlay: DESPUÉS (lado derecho, recortado por --pos) -->
+                  <img
+                    src={t.despues}
+                    alt={t.despuesAlt ?? `${t.etiqueta} — después`}
+                    loading="lazy"
+                    decoding="async"
+                    class="cmp-overlay absolute inset-0 h-full w-full object-cover select-none"
                     draggable="false"
                   />
 
                   <!-- Etiquetas -->
                   <span class="pointer-events-none absolute left-2 top-2 rounded bg-black/60 px-2 py-0.5 font-heading text-[10px] font-bold uppercase tracking-wider text-text">
-                    Después
+                    Antes
                   </span>
                   <span class="pointer-events-none absolute right-2 top-2 rounded bg-black/60 px-2 py-0.5 font-heading text-[10px] font-bold uppercase tracking-wider text-text">
-                    Antes
+                    Después
                   </span>
 
                   <!-- Línea + manija -->
@@ -197,8 +197,8 @@ const camIcon =
 </section>
 
 <style>
-  /* El "antes" se recorta según --pos: se muestra desde --pos hacia la derecha */
-  .cmp-antes {
+  /* El "después" se recorta según --pos: se muestra desde --pos hacia la derecha */
+  .cmp-overlay {
     clip-path: inset(0 0 0 var(--pos));
   }
   /* Quitar apariencia nativa del range (se usa solo como zona de arrastre invisible) */
