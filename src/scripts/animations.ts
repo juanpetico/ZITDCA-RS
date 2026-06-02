@@ -23,7 +23,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 if (prefersReducedMotion) {
   // Asegurarnos de que todos los elementos animados sean visibles
   const revealEls = document.querySelectorAll<HTMLElement>(
-    '[data-anim], [data-count], [data-revline], [data-fab], [data-gallery]'
+    '[data-anim], [data-count], [data-revline], [data-fab]'
   );
   revealEls.forEach((el) => {
     el.style.opacity = '1';
@@ -244,39 +244,9 @@ if (prefersReducedMotion) {
   });
 
   // ───────────────────────────────────────────────────────────────────────────
-  // 9. Galería horizontal con pin (solo desktop, ≥ 1024px)
+  // 9. Galería de trabajos: las tarjetas usan el reveal escalonado de [data-anim="card"]
+  //    (sección 4). El comparador antes/después y los filtros se manejan en Galeria.astro.
   // ───────────────────────────────────────────────────────────────────────────
-  const gallerySection = document.querySelector<HTMLElement>('#trabajos');
-  const galleryTrack = document.querySelector<HTMLElement>('[data-gallery]');
-
-  if (gallerySection && galleryTrack && window.innerWidth >= 1024) {
-    // Calcular el ancho total a desplazar
-    const cards2 = galleryTrack.querySelectorAll<HTMLElement>('.gallery-card');
-    const cardWidth = cards2[0]?.offsetWidth ?? 400;
-    const gap = 16; // gap-4 = 1rem = 16px
-    const totalWidth = (cardWidth + gap) * cards2.length + 32; // + padding
-    const visibleWidth = window.innerWidth;
-    const scrollDistance = totalWidth - visibleWidth;
-
-    if (scrollDistance > 0) {
-      // Quitar overflow para que el pin funcione
-      galleryTrack.style.overflow = 'visible';
-
-      gsap.to(galleryTrack, {
-        x: -scrollDistance,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: gallerySection,
-          start: 'top top',
-          end: `+=${scrollDistance}`,
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-    }
-  }
 
   // ───────────────────────────────────────────────────────────────────────────
   // 10. FAB de WhatsApp: aparece tras 1 viewport de scroll

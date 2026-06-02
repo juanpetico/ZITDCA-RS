@@ -1,9 +1,20 @@
 ---
-import { servicios, waLink } from '../data/site';
+import { servicios, categoriasServicio, waLink } from '../data';
+
+// Excluimos las versiones con imagen (-premium) para no duplicar servicios en la lista.
+const serviciosPrecio = servicios.filter((s) => !s.imagen);
+
+// Agrupamos por categoría, en el orden definido, omitiendo categorías vacías.
+const grupos = categoriasServicio
+  .map((cat) => ({
+    ...cat,
+    items: serviciosPrecio.filter((s) => s.categoria === cat.id),
+  }))
+  .filter((g) => g.items.length > 0);
 ---
 
 <section id="precios" class="bg-surface-2 py-20 px-4 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-4xl">
+  <div class="mx-auto max-w-3xl">
 
     <!-- Encabezado -->
     <div class="mb-12 text-center">
@@ -11,77 +22,90 @@ import { servicios, waLink } from '../data/site';
         Transparencia total
       </p>
       <h2 class="font-heading text-3xl font-bold uppercase text-text sm:text-4xl">
-        Lista de Precios Oficiales
+        Lista de Precios
       </h2>
       <p class="mt-4 text-text-dim max-w-xl mx-auto text-sm">
         Precios de referencia. El costo final depende del diagnóstico y el modelo del vehículo.
-        Cotiza sin compromiso.
+        Toca una categoría para ver sus precios.
       </p>
     </div>
 
-    <!-- Tabla de precios -->
-    <div class="rounded-xl border border-white/10 overflow-hidden">
-      <!-- Encabezado de tabla -->
-      <div
-        class="grid grid-cols-[1fr_auto] items-center bg-surface px-6 py-3 text-xs font-semibold uppercase tracking-wider text-text-dim border-b border-white/10"
-      >
-        <span>Servicio</span>
-        <span>Precio desde</span>
-      </div>
-
-      <!-- Filas de servicios -->
-      {servicios.map((s, i) => (
-        <div
-          data-anim="price-row"
-          class:list={[
-            "grid grid-cols-[1fr_auto] items-center gap-4 px-6 py-4 transition-colors hover:bg-white/5",
-            i % 2 === 0 ? "bg-surface/40" : "bg-transparent",
-            i < servicios.length - 1 ? "border-b border-white/5" : "",
-          ]}
+    <!-- Acordeón de categorías -->
+    <div class="flex flex-col gap-3">
+      {grupos.map((g, i) => (
+        <details
+          data-anim="card"
+          class="group overflow-hidden rounded-xl border border-white/10 bg-surface/60 [&[open]]:border-blue/30"
+          open={i === 0}
         >
-          <!-- Nombre del servicio -->
-          <div class="flex items-center gap-3">
-            <div class="shrink-0 h-8 w-8 flex items-center justify-center rounded-lg bg-white/5">
-              <svg
-                aria-hidden="true"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                class:list={[s.destacado ? "stroke-blue" : "stroke-silver/60"]}
-              >
-                <path d={s.iconoPath} stroke="currentColor" fill="none" stroke-width="1.5"/>
-              </svg>
-            </div>
-            <div>
-              <p class:list={[
-                "font-heading text-sm font-semibold uppercase",
-                s.destacado ? "text-blue" : "text-text",
-              ]}>
-                {s.titulo}
-                {s.destacado && (
-                  <span class="ml-2 inline-block rounded-full bg-blue/20 px-2 py-0.5 text-xs text-blue font-normal normal-case tracking-normal">
-                    Servicio estrella
-                  </span>
-                )}
-              </p>
-              <p class="text-xs text-text-dim mt-0.5 hidden sm:block">{s.descripcion}</p>
-            </div>
-          </div>
+          <!-- Cabecera de la categoría -->
+          <summary
+            class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 transition-colors hover:bg-white/5 [&::-webkit-details-marker]:hidden"
+          >
+            <span class="flex items-center gap-3">
+              <span class="font-heading text-base font-semibold uppercase tracking-wide text-text">
+                {g.label}
+              </span>
+              <span class="rounded-full bg-white/10 px-2 py-0.5 text-xs font-medium text-text-dim">
+                {g.items.length}
+              </span>
+            </span>
+            <svg
+              aria-hidden="true"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="shrink-0 text-text-dim transition-transform duration-300 group-open:rotate-180"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </summary>
 
-          <!-- Precio -->
-          <p class:list={[
-            "font-heading text-sm font-bold whitespace-nowrap",
-            s.destacado ? "text-gold" : "text-silver",
-          ]}>
-            {s.precioDesde}
-          </p>
-        </div>
+          <!-- Filas de precio -->
+          <div class="border-t border-white/5">
+            {g.items.map((s, j) => (
+              <div
+                class:list={[
+                  'flex items-center justify-between gap-4 px-5 py-3.5',
+                  j < g.items.length - 1 ? 'border-b border-white/5' : '',
+                ]}
+              >
+                <span class:list={[
+                  'flex items-center gap-2 text-sm',
+                  s.destacado ? 'text-blue font-semibold' : 'text-text',
+                ]}>
+                  {s.titulo}
+                  {s.destacado && (
+                    <span class="inline-block rounded-full bg-blue/20 px-2 py-0.5 text-[10px] font-normal text-blue">
+                      Estrella
+                    </span>
+                  )}
+                </span>
+                <span class:list={[
+                  'whitespace-nowrap font-heading text-sm font-bold',
+                  s.destacado ? 'text-gold' : 'text-silver',
+                ]}>
+                  {s.precioDesde}
+                </span>
+              </div>
+            ))}
+          </div>
+        </details>
       ))}
     </div>
 
+    <!-- Nota al pie -->
+    <p class="mt-6 text-center text-xs text-text-dim">
+      ¿No ves tu servicio o necesitas un precio exacto? Cotiza sin compromiso.
+    </p>
+
     <!-- CTA principal -->
-    <div class="mt-10 text-center">
+    <div class="mt-8 text-center">
       <a
         href={waLink("Hola ZIT'DCA RS, vengo de su página y quiero cotizar mi servicio.")}
         target="_blank"
