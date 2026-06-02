@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import RevLine from '../components/RevLine.astro';
+import Servicios from '../components/Servicios.astro';
+import Stats from '../components/Stats.astro';
+import Precios from '../components/Precios.astro';
+import Galeria from '../components/Galeria.astro';
+import PorQue from '../components/PorQue.astro';
+import Ubicacion from '../components/Ubicacion.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFAB from '../components/WhatsAppFAB.astro';
+---
+
+<Base>
+  <Nav />
+
+  <main>
+    <!-- 1. Hero: pantalla completa con imagen y CTAs -->
+    <Hero />
+
+    <!-- 2. Línea divisora decorativa roja -->
+    <RevLine />
+
+    <!-- 3. Servicios: grid 8 tarjetas -->
+    <Servicios />
+
+    <!-- 4. Stats / Contadores animados -->
+    <Stats />
+
+    <!-- 5. Línea divisora -->
+    <RevLine />
+
+    <!-- 6. Precios: tabla oscura con CTA -->
+    <Precios />
+
+    <!-- 7. Galería horizontal de trabajos recientes -->
+    <Galeria />
+
+    <!-- 8. Por qué elegirnos -->
+    <PorQue />
+
+    <!-- 9. Ubicación y contacto -->
+    <Ubicacion />
+  </main>
+
+  <Footer />
+
+  <!-- FAB flotante de WhatsApp (fuera de main para posición fixed) -->
+  <WhatsAppFAB />
+</Base>

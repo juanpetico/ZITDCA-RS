@@ -1,0 +1,77 @@
+---
+import { razones, waLink } from '../data/site';
+---
+
+<section class="bg-bg py-20 px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-7xl">
+
+    <!-- Encabezado -->
+    <div class="mb-12 text-center">
+      <p class="mb-2 font-heading text-xs font-semibold uppercase tracking-[0.25em] text-red">
+        Nuestra diferencia
+      </p>
+      <h2 class="font-heading text-3xl font-bold uppercase text-text sm:text-4xl">
+        ¿Por Qué Elegirnos?
+      </h2>
+      <p class="mt-4 text-text-dim max-w-2xl mx-auto">
+        En ZIT'DCA RS no solo reparamos autos — te damos la tranquilidad de saber
+        exactamente qué tiene tu vehículo y cuánto costará.
+      </p>
+    </div>
+
+    <!-- Grid de razones -->
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {razones.map((r, i) => (
+        <div
+          data-anim="reason"
+          class="group flex flex-col items-start gap-4 rounded-xl border border-white/10 bg-surface/40 p-6 transition-all duration-300 hover:border-blue/20 hover:-translate-y-1"
+          style="backdrop-filter: blur(8px);"
+        >
+          <!-- Número indicador -->
+          <div class="flex items-center gap-3 w-full">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue/10 border border-blue/20">
+              <svg
+                aria-hidden="true"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--color-blue)"
+                stroke-width="1.5"
+              >
+                <path d={r.iconoPath} stroke="currentColor" fill="none" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <!-- Línea decorativa roja pequeña -->
+            <div class="h-0.5 flex-1 bg-linear-to-r from-red/40 to-transparent rounded-full" aria-hidden="true"></div>
+          </div>
+
+          <div>
+            <h3 class="font-heading text-base font-bold uppercase text-text tracking-wide mb-2">
+              {r.titulo}
+            </h3>
+            <p class="text-sm text-text-dim leading-relaxed">
+              {r.descripcion}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA secundario -->
+    <div class="mt-14 text-center">
+      <a
+        href={waLink("Hola ZIT'DCA RS, quiero agendar una cita para revisión de mi auto.")}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 rounded-full border border-blue/40 bg-blue/10 px-8 py-3.5 font-semibold text-blue transition-all hover:bg-blue/20 hover:border-blue/60"
+      >
+        Habla directo con el técnico
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,73 @@
+﻿/* Fuentes self-hosted via @fontsource */
+@import "@fontsource/oswald/500.css";
+@import "@fontsource/oswald/600.css";
+@import "@fontsource/oswald/700.css";
+@import "@fontsource-variable/inter";
+
+/* Tailwind CSS v4 */
+@import "tailwindcss";
+
+/* Design tokens - expuestos a Tailwind v4 via @theme */
+@theme {
+  --color-bg:        #0A0B0D;
+  --color-surface:   #121418;
+  --color-surface-2: #1A1D23;
+  --color-blue:      #1E5BFF;
+  --color-blue-glow: #3D74FF;
+  --color-red:       #E10600;
+  --color-gold:      #C9A24B;
+  --color-silver:    #C8CDD4;
+  --color-text:      #EAECEF;
+  --color-text-dim:  #9AA1AC;
+  --color-whatsapp:  #25D366;
+
+  --font-heading: "Oswald", "Arial Narrow", sans-serif;
+  --font-body:    "Inter Variable", "Inter", sans-serif;
+}
+
+/* Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* NO scroll-behavior: smooth aqui — Lenis lo maneja en Fase B */
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+}
+
+/* Tipografía base para headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Focus visible para accesibilidad */
+:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Smooth scrolling — comentado, Lenis lo hará en Fase B */
+/* html { scroll-behavior: smooth; } */
+
+img {
+  max-width: 100%;
+  height: auto;
+}

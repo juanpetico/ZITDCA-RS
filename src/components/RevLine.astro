@@ -1,0 +1,33 @@
+---
+// RevLine.astro
+// Divisor decorativo: línea roja diagonal animada con strokeDashoffset via ScrollTrigger.
+// Uso: <RevLine /> entre secciones. El script de animaciones busca [data-revline].
+---
+
+<div class="relative overflow-hidden py-4 w-full" aria-hidden="true">
+  <svg
+    data-revline
+    viewBox="0 0 1200 40"
+    preserveAspectRatio="none"
+    class="w-full h-10"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <!-- Línea diagonal roja que se "dibuja" con strokeDashoffset -->
+    <path
+      d="M0,36 L1200,4"
+      stroke="var(--color-red)"
+      stroke-width="2"
+      fill="none"
+      stroke-linecap="round"
+    />
+    <!-- Segunda línea más tenue para profundidad -->
+    <path
+      d="M0,38 L1200,6"
+      stroke="var(--color-red)"
+      stroke-width="0.5"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.3"
+    />
+  </svg>
+</div>
